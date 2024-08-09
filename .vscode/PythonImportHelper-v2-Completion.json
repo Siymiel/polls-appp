@@ -212,6 +212,15 @@
         "documentation": {}
     },
     {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
         "label": "Migration",
         "kind": 6,
         "importPath": "django-polls.django_polls.migrations.0001_initial",
@@ -497,6 +506,69 @@
         "description": "mysite.mysite.wsgi",
         "peekOfCode": "application = get_wsgi_application()",
         "detail": "mysite.mysite.wsgi",
+        "documentation": {}
+    },
+    {
+        "label": "install_package_if_missing",
+        "kind": 2,
+        "importPath": "mysite.i",
+        "description": "mysite.i",
+        "peekOfCode": "def install_package_if_missing(package_name):\n    try:\n        __import__(package_name)\n    except ImportError:\n        print(f\"`{package_name}` not found. Installing...\")\n        subprocess.check_call([sys.executable, \"-m\", \"pip\", \"install\", package_name])\n        print(f\"`{package_name}` installed successfully.\")\n    return __import__(package_name)\n# Ensure colorama and tqdm are installed\ncolorama = install_package_if_missing(\"colorama\")",
+        "detail": "mysite.i",
+        "documentation": {}
+    },
+    {
+        "label": "pip_install",
+        "kind": 2,
+        "importPath": "mysite.i",
+        "description": "mysite.i",
+        "peekOfCode": "def pip_install(package_name):\n    # Display a progress bar during installation\n    for _ in tqdm.tqdm(range(100), desc=f\"{colorama.Fore.YELLOW}Installing {package_name}\", bar_format=\"{l_bar}{bar}| {n_fmt}/{total_fmt}\", ncols=60):\n        subprocess.run([\"sleep\", \"0.02\"])  # Simulate progress (remove in actual usage)\n    subprocess.check_call([sys.executable, \"-m\", \"pip\", \"install\", package_name])\ndef pip_uninstall(package_name):\n    # Display a progress bar during uninstallation\n    for _ in tqdm.tqdm(range(100), desc=f\"{colorama.Fore.YELLOW}Uninstalling {package_name}\", bar_format=\"{l_bar}{bar}| {n_fmt}/{total_fmt}\", ncols=60):\n        subprocess.run([\"sleep\", \"0.02\"])  # Simulate progress (remove in actual usage)\n    subprocess.check_call([sys.executable, \"-m\", \"pip\", \"uninstall\", \"-y\", package_name])",
+        "detail": "mysite.i",
+        "documentation": {}
+    },
+    {
+        "label": "pip_uninstall",
+        "kind": 2,
+        "importPath": "mysite.i",
+        "description": "mysite.i",
+        "peekOfCode": "def pip_uninstall(package_name):\n    # Display a progress bar during uninstallation\n    for _ in tqdm.tqdm(range(100), desc=f\"{colorama.Fore.YELLOW}Uninstalling {package_name}\", bar_format=\"{l_bar}{bar}| {n_fmt}/{total_fmt}\", ncols=60):\n        subprocess.run([\"sleep\", \"0.02\"])  # Simulate progress (remove in actual usage)\n    subprocess.check_call([sys.executable, \"-m\", \"pip\", \"uninstall\", \"-y\", package_name])\ndef install_and_add(package_name):\n    pip_install(package_name)\n    settings_file = './mysite/settings.py'  # Adjust the path as needed\n    with open(settings_file, 'r+') as f:\n        lines = f.readlines()",
+        "detail": "mysite.i",
+        "documentation": {}
+    },
+    {
+        "label": "install_and_add",
+        "kind": 2,
+        "importPath": "mysite.i",
+        "description": "mysite.i",
+        "peekOfCode": "def install_and_add(package_name):\n    pip_install(package_name)\n    settings_file = './mysite/settings.py'  # Adjust the path as needed\n    with open(settings_file, 'r+') as f:\n        lines = f.readlines()\n        if package_name not in ''.join(lines):\n            # Find the INSTALLED_APPS section\n            for i, line in enumerate(lines):\n                if 'INSTALLED_APPS' in line:\n                    break",
+        "detail": "mysite.i",
+        "documentation": {}
+    },
+    {
+        "label": "uninstall_and_remove",
+        "kind": 2,
+        "importPath": "mysite.i",
+        "description": "mysite.i",
+        "peekOfCode": "def uninstall_and_remove(package_name):\n    pip_uninstall(package_name)\n    settings_file = './mysite/settings.py'  # Adjust the path as needed\n    with open(settings_file, 'r+') as f:\n        lines = f.readlines()\n        package_line = f\"    '{package_name}',\\n\"\n        if package_line in lines:\n            lines.remove(package_line)\n            f.seek(0)\n            f.truncate()",
+        "detail": "mysite.i",
+        "documentation": {}
+    },
+    {
+        "label": "colorama",
+        "kind": 5,
+        "importPath": "mysite.i",
+        "description": "mysite.i",
+        "peekOfCode": "colorama = install_package_if_missing(\"colorama\")\ntqdm = install_package_if_missing(\"tqdm\")\ndef pip_install(package_name):\n    # Display a progress bar during installation\n    for _ in tqdm.tqdm(range(100), desc=f\"{colorama.Fore.YELLOW}Installing {package_name}\", bar_format=\"{l_bar}{bar}| {n_fmt}/{total_fmt}\", ncols=60):\n        subprocess.run([\"sleep\", \"0.02\"])  # Simulate progress (remove in actual usage)\n    subprocess.check_call([sys.executable, \"-m\", \"pip\", \"install\", package_name])\ndef pip_uninstall(package_name):\n    # Display a progress bar during uninstallation\n    for _ in tqdm.tqdm(range(100), desc=f\"{colorama.Fore.YELLOW}Uninstalling {package_name}\", bar_format=\"{l_bar}{bar}| {n_fmt}/{total_fmt}\", ncols=60):",
+        "detail": "mysite.i",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "kind": 5,
+        "importPath": "mysite.i",
+        "description": "mysite.i",
+        "peekOfCode": "tqdm = install_package_if_missing(\"tqdm\")\ndef pip_install(package_name):\n    # Display a progress bar during installation\n    for _ in tqdm.tqdm(range(100), desc=f\"{colorama.Fore.YELLOW}Installing {package_name}\", bar_format=\"{l_bar}{bar}| {n_fmt}/{total_fmt}\", ncols=60):\n        subprocess.run([\"sleep\", \"0.02\"])  # Simulate progress (remove in actual usage)\n    subprocess.check_call([sys.executable, \"-m\", \"pip\", \"install\", package_name])\ndef pip_uninstall(package_name):\n    # Display a progress bar during uninstallation\n    for _ in tqdm.tqdm(range(100), desc=f\"{colorama.Fore.YELLOW}Uninstalling {package_name}\", bar_format=\"{l_bar}{bar}| {n_fmt}/{total_fmt}\", ncols=60):\n        subprocess.run([\"sleep\", \"0.02\"])  # Simulate progress (remove in actual usage)",
+        "detail": "mysite.i",
         "documentation": {}
     },
     {
